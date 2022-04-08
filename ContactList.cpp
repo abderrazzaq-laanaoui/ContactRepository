@@ -24,6 +24,7 @@ void ContactList::addContact(std::string name, std::string phoneNumber, std::str
         if (compare(newContact->getName(),head->getContact()->getName()) < 0)
         {
             newNode->setNext(head);
+            head->setPrev(newNode);
             head = newNode;
         }
         else
@@ -34,33 +35,9 @@ void ContactList::addContact(std::string name, std::string phoneNumber, std::str
                 current = current->getNext();
             }
             newNode->setNext(current->getNext());
+            newNode->setPrev(current);
             current->setNext(newNode);
         }
-        /*
-        {
-        std::cout << "Adding < contact: " << name << std::endl;
-            newNode->setNext(head);
-            head->setPrev(newNode);
-            head = newNode;
-        }
-        else
-        {
-            Node *current = head;
-            while (current != nullptr)
-            {
-                if (tolower(newContact->getName()[0]) > tolower(current->getContact()->getName()[0]))
-                {
-        std::cout << "Adding > contact: " << name << std::endl;
-                    newNode->setNext(current);
-                    newNode->setPrev(current->getPrev());
-                    current->getPrev()->setNext(newNode);
-                    current->setPrev(newNode);
-                    break;
-                }
-                current = current->getNext();
-            }
-        }
-    */
     }
     size++;
 }
@@ -98,14 +75,16 @@ void ContactList::removeContact(std::string name){
     Node *current = head;
     while (current != nullptr)
     {
-        if (current->getContact()->getName() == name)
+        if (compare(current->getContact()->getName(),name)==0)
         {
             if (current == head)
             {
                 head = current->getNext();
-                if(head != nullptr)head->setPrev(nullptr);
-            }else
-            {
+                if(head != nullptr) head->setPrev(nullptr);
+            }else if(current->getNext() == nullptr){
+                current->getPrev()->setNext(nullptr);
+            }
+            else{
                 current->getPrev()->setNext(current->getNext());
                 current->getNext()->setPrev(current->getPrev());
             }
