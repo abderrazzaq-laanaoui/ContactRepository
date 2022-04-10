@@ -2,6 +2,14 @@
 #include "Contact.hpp"
 #include "Node.hpp"
 
+class ContactNotFoundException :public std::runtime_error
+{
+private:
+    /* data */
+public:
+    ContactNotFoundException(const std::string& name): std::runtime_error("Contact with name" + name +" not found."){};
+};
+
 class ContactList
 {
 private:

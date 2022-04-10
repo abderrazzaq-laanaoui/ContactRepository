@@ -23,17 +23,11 @@ int main(){
     std::cout << contact->getEmail() << std::endl;
     std::cout << "-----------------------------------------" << std::endl;
     // edit the contact with the name "John"
-    contactRepository.editContact("John", "Candy", "987292283", "Candy@email.com");
+    contactRepository.editContact("John", "Jack", "987292283", "Jacky@email.com");
     contactRepository.print();
-    // get the contact with the name "candy"
-    contact = contactRepository.getContact("jack");
-    // show the name of the contact
-    if(contact == nullptr){
-        std::cout << "contact not found" << std::endl;
-    }
-    else{
-        std::cout << "Contact: " << contact->getName() << " - " << contact->getPhoneNumber() << " - " << contact->getEmail()  << std::endl;
-    }
+    // get the contact with his name, throw an exception if the contact is not found
+    contact = contactRepository.getContact("Candy");
+
     // remove the contact with the name "jack"
     contactRepository.removeContact("jack");
     // show the size of the repo

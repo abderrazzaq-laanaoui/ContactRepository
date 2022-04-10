@@ -2,28 +2,18 @@
 #include "Contact.hpp"
 // constructors
 Contact::Contact(std::string name, std::string phoneNumber, std::string email)
-{
-    this->name = name;
-    this->phoneNumber = phoneNumber;
-    this->email = email;
-}
-Contact::Contact(std::string name, std::string phoneNumber)
-{
-    this->name = name;
-    this->phoneNumber = phoneNumber;
-    this->email = "";
-}
+    : name(name),phoneNumber(phoneNumber),email(email){}
 
 // getters
-std::string Contact::getName()
+std::string Contact::getName() const
 {
     return this->name;
 }
-std::string Contact::getPhoneNumber()
+std::string Contact::getPhoneNumber() const
 {
     return this->phoneNumber;
 }
-std::string Contact::getEmail()
+std::string Contact::getEmail() const
 {
     return this->email;
 }
@@ -43,11 +33,7 @@ void Contact::setEmail(std::string email)
     this->email = email;
 }
 
-void Contact::print()
+void Contact::print() const
 {
     std::cout << name << " - " << phoneNumber << " - " << email << std::endl;
-}
-// destructor
-Contact::~Contact()
-{
 }

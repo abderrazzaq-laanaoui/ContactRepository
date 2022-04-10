@@ -4,12 +4,10 @@
 #include "Contact.hpp"
 #include <iostream>
 
+
+
 // constructor
-ContactList::ContactList()
-{
-    head = nullptr;
-    size = 0;
-}
+ContactList::ContactList(): head(nullptr),size(0) {}
 // add a contact to the list
 void ContactList::addContact(std::string name, std::string phoneNumber, std::string email)
 {
@@ -21,14 +19,14 @@ void ContactList::addContact(std::string name, std::string phoneNumber, std::str
     }
     else
     {
-        if (compare(newContact->getName(),head->getContact()->getName()) < 0)
-        {
-            newNode->setNext(head);
-            head->setPrev(newNode);
-            head = newNode;
-        }
-        else
-        {
+        // if (compare(newContact->getName(),head->getContact()->getName()) < 0)
+        // {
+        //     newNode->setNext(head);
+        //     head->setPrev(newNode);
+        //     head = newNode;
+        // }
+        // else
+        // {
             Node *current = head;
             while (current->getNext() != nullptr && compare(newContact->getName(),current->getNext()->getContact()->getName()) > 0)
             {
@@ -37,7 +35,7 @@ void ContactList::addContact(std::string name, std::string phoneNumber, std::str
             newNode->setNext(current->getNext());
             newNode->setPrev(current);
             current->setNext(newNode);
-        }
+        // }
     }
     size++;
 }
@@ -52,10 +50,11 @@ void ContactList::editContact(std::string oldName, std::string newName, std::str
             current->getContact()->setName(newName);
             current->getContact()->setPhoneNumber(newPhoneNumber);
             current->getContact()->setEmail(newEmail);
-            break;
+            return;
         }
         current = current->getNext();
     }
+    throw ContactNotFoundException(oldName);
 }
 
 Contact* ContactList::getContact(std::string name)
@@ -63,14 +62,15 @@ Contact* ContactList::getContact(std::string name)
     Node *current = head;
     while (current != nullptr)
     {
-        if (current->getContact()->getName().compare(name) == 0)
+        if (compare(current->getContact()->getName(),name) == 0)
         {
             return current->getContact();
         }
         current = current->getNext();
     }
-    return nullptr;
+    throw ContactNotFoundException(name);
 }
+
 void ContactList::removeContact(std::string name){
     Node *current = head;
     while (current != nullptr)
@@ -90,10 +90,11 @@ void ContactList::removeContact(std::string name){
             }
             delete current;
             size--;
-            break;
+            return;
         }
         current = current->getNext();
     }
+    throw ContactNotFoundException(name);
 }
 
 void ContactList::print()
@@ -151,3 +152,5 @@ int ContactList::compare(std::string name1, std::string name2)
     }
     return 0;
 }
+
+
